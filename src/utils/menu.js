@@ -1,0 +1,73 @@
+module.exports = [
+  {
+    id: 1,
+    icon: 'laptop',
+    name: '首页',
+    router: '/dashboard',
+  },
+  {
+    id: 2,
+    bpid: 1,
+    name: '商圈管理',
+    icon: 'environment-o',
+    router: '/CBD',
+  },
+  {
+    id: 3,
+    bpid: 1,
+    name: '场所管理',
+    icon: 'shopping-cart',
+    router: '/wareHouse',
+  },
+  {
+    id: 4,
+    bpid: 1,
+    name: '充电箱管理',
+    icon: 'database',
+    router: '/powerBox',
+  },{
+    id: 5,
+    bpid: 1,
+    name: '充电宝管理',
+    icon: 'credit-card',
+    router: '/powerBan',
+  },{
+    id: 6,
+    bpid: 1,
+    name: '用户管理',
+    icon: 'user',
+    router: '/users',
+  },{
+    id: 7,
+    bpid: 1,
+    name: '订单管理',
+    icon: 'menu-unfold',
+    router: '/order',
+  },{
+    id: 8,
+    bpid: 1,
+    name: '计费规则',
+    icon: 'file-pdf',
+    router: '/rules',
+  },{
+    id: 9,
+    bpid: 1,
+    name: '权限管理',
+    icon: 'key',
+    router: '/authorization',
+  },{
+    id: 10,
+    mpid:9,
+    bpid: 1,
+    name: '管理员',
+    icon: 'windows-o',
+    router: '/admin',
+  },{
+    id: 11,
+    bpid: 1,
+    mpid:9,
+    name: '角色管理',
+    icon: 'woman',
+    router: '/role',
+  },
+]
