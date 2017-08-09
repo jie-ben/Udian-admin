@@ -128,7 +128,6 @@ export default {
     },
     *grantRole ({ payload }, { select, call, put }) {
       const {data} = yield call(grantRole, payload)
-      console.log("datadata==",data)
       if(data.status ==200){
         yield put({
           type: 'showPower',
