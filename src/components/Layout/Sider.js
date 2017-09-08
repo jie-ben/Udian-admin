@@ -15,7 +15,7 @@ function Sider ({ siderFold, darkTheme, location, changeTheme, navOpenKeys, chan
     changeOpenKeys,
   }
   return (
-    <div onMouseOver = {onMouseOver} onMouseOut = {onMouseOut}>
+    <div>
       <div className={styles.logo}>
         <img alt={'logo'} src={siderFold ? config.logo_x:config.logo} />
         {siderFold ? '' : <span>{config.name}</span>}

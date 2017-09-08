@@ -70,14 +70,6 @@ const Routers = function ({ history, app }) {
             }, 'powerBox')
           },
         },{
-          path: 'powerBan',
-          getComponent (nextState, cb) {
-            require.ensure([], require => {
-              registerModel(app, require('./models/powerBan'))
-              cb(null, require('./routes/powerBan/'))
-            }, 'powerBen')
-          },
-        },{
           path: 'wareHouseCreate',
           getComponent (nextState, cb) {
             require.ensure([], require => {

@@ -26,12 +26,6 @@ module.exports = [
     icon: 'database',
     router: '/powerBox',
   },{
-    id: 5,
-    bpid: 1,
-    name: '充电宝管理',
-    icon: 'credit-card',
-    router: '/powerBan',
-  },{
     id: 6,
     bpid: 1,
     name: '用户管理',

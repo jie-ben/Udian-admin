@@ -10,7 +10,7 @@ export default {
     user: {},
     loginButtonLoading: true,
     menuPopoverVisible: true,
-    siderFold:true,
+    siderFold:false,
     // darkTheme: localStorage.getItem(`${prefix}darkTheme`) === 'false',
     darkTheme: localStorage.getItem(`${prefix}darkTheme`) === 'false',
     isNavbar: document.body.clientWidth < 769,
