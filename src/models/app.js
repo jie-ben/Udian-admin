@@ -58,9 +58,7 @@ export default {
           type: 'queryUserSuccess',
           payload: data.data.rows.adminAccount
         })
-        // if (location.pathname === '/login') {
-        //   yield put(routerRedux.push('/dashboard'))
-        // }
+        yield put(routerRedux.push('/dashboard'))
       } else {
         yield put({type: 'logout',payload})
         
