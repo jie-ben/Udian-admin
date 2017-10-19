@@ -1,54 +1,91 @@
+
+import { allOrder,allCount,allCustomer,everydayIncome } from '../services/dashboard'
+import { parse } from 'qs'
 export default {
   namespace: 'dashboard',
   state: {
-    weather: {
-      city: '成都',
-      temperature: '5',
-      name: '晴',
-      icon: 'http://www.zuimeitianqi.com/res/icon/0_big.png',
-      dateTime: new Date().format('MM-dd hh:mm'),
-    },
-    sales: [],
-    quote: {
-      avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
-    },
-    user: {
-      avatar: 'http://img.hb.aicdn.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236',
-    },
+    allOrderNumber:'',
+    allCountNumber:'',
+    allCustomerNumber:'',
+    BayEarningsArry:[],
   },
   subscriptions: {
     setup ({ dispatch }) {
       dispatch({ type: 'query' })
-      dispatch({ type: 'queryWeather' })
+      dispatch({ 
+        type: 'earningDay',
+        payload: {}
+       })
     },
   },
   effects: {
     *query ({
       payload,
     }, { call, put }) {
-      // const data = yield call(query, parse(payload))
-      // yield put({ type: 'queryWeather', payload: { ...data } })
+      const dataOrder = yield call(allOrder)
+      const dataCount = yield call(allCount)
+      const dataCustomer = yield call(allCustomer)
+      yield put({
+        type: 'queryWeather', 
+        payload: { 
+          allOrderNumber:dataOrder.data.rows,
+          allCountNumber:dataCount.data.rows,
+          allCustomerNumber:dataCustomer.data.rows,
+        } 
+      }) 
     },
-    *queryWeather ({
+    *earningDay ({
       payload,
     }, { call, put }) {
-      // const myCityResult = yield call(myCity, { flg: 0 })
-      // const result = yield call(queryWeather, { cityCode: myCityResult.selectCityCode })
-      // const weather = zuimei.parseActualData(result.data.actual)
-      // weather.city = myCityResult.selectCityName
-      // yield put({ type: 'queryWeatherSuccess', payload: {
-      //   weather,
-      // } })
+        const NowDate = new Date()
+        const NowYear = NowDate.getFullYear();    //获取完整的年份(4位,1970-????)
+        const NowMonth = NowDate.getMonth();       //获取当前月份(0-11,0代表1月)
+        const NowBay = NowDate.getDate();
+        const addDate =(a,i)=>{ //天数向减
+          let d = new Date(a)
+          d = d.valueOf()
+          d = d + i * 24 * 60 * 60 * 1000
+          d = new Date(d)
+          return d;
+        }
+        let date = {}
+        if(payload.startDate){
+          date = {
+            startDate:payload.startDate,
+            endDate:payload.endDate,
+          }
+        }else{
+          let NextNow  = addDate((NowMonth+1)+"/"+NowBay+"/"+NowYear,-7);
+          let Y = NextNow.getFullYear();
+          let M = NextNow.getMonth()+1;
+          let D = NextNow.getDate();
+          let startDate = NowYear+"-"+ (NowMonth+1)+"-"+ NowBay +" "+"0:0:0";
+          let endDate = Y+"-"+M+"-"+D+" "+ "23:59:59"
+          date ={
+            startDate:startDate,
+            endDate:endDate
+          }
+        }
+      const data = yield call(everydayIncome,date)
+      console.log("data==",data)
+      if(data){
+        yield put({
+          type: 'BayEarnings', 
+          payload: { 
+            BayEarningsArry:data.data.rows,
+          } 
+        }) 
+      }
     },
   },
   reducers: {
-    queryWeatherSuccess (state, action) {
+    queryWeather (state, action) {
       return {
         ...state,
         ...action.payload,
       }
     },
-    queryWeather (state, action) {
+    BayEarnings (state, action) {
       return {
         ...state,
         ...action.payload,

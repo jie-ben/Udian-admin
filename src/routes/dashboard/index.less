@@ -10,9 +10,48 @@
     box-shadow: 4px 4px 40px rgba(143,201,251,.6);
   }
 }
-
+.qieoten{
+  display:flex;
+  justify-content: space-around;
+  .box{
+    text-align:center;
+    .centen{
+      font-size:20px;
+      font-weight:bold;
+      color:#000
+    }
+    .tet{
+      font-size:18px;
+    }
+  }
+}
 .quote {
+  .tit{
+    color:#fff;
+    text-align:center;
+    padding-top:10px;
+    font-size:18px;
+  }
+  .total{
+    color:#fff;
+    text-align:center;
+  }
   &:hover {
     box-shadow: 4px 4px 40px rgba(246,152,153,.6);
   }
+
+}
+.LineChartCount{
+  width:100% !important;
+  position:inherit !important;
+  :global{
+    .recharts-surface{
+      width:100% !important;
+    }
+  }
+}
+.ScreenBx{
+  width:233px;
+  height:40px;
+  float: right;
 }

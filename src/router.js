@@ -94,6 +94,14 @@ const Routers = function ({ history, app }) {
             }, 'order')
           },
         },{
+          path: 'distributor',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/Distributor'))
+              cb(null, require('./routes/Distributor'))
+            }, 'distributor')
+          },
+        },{
           path: 'admin',
           getComponent (nextState, cb) {
             require.ensure([], require => {           

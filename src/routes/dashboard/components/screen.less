@@ -1,0 +1,71 @@
+.Calendarbx{
+	width:100%;
+	height:40px;
+	float:right;
+	.CalendarbxInput{
+		width:233px;
+		height:40px;
+		position:relative;
+		.CalendarbxIn{
+			width:233px;
+			border:solid 1px #ccc;
+		}
+		.CalendarbxRight{
+			width:233px;
+			border:solid 1px #ccc;
+			border-radius: 4px;
+			background-color:#fff;
+			position: absolute;
+			left:-1px;
+			top:-1px;
+			.tabs{
+				width:100%;
+				height:40px;
+				text-align:center;
+				padding:10px 0;
+				box-sizing: border-box;
+				border-bottom:solid 1px #ccc;
+			}
+			.bayData{
+				width:100%;
+				height:40px;
+				line-height:40px;
+				border-bottom:1px #eee solid;
+				padding-left:10px;
+			}
+			.bayDataEle{
+				width:100%;
+				height:40px;
+				line-height:40px;
+				padding-left:10px;
+				color:#fff;
+				background-color:#108ee9
+			}
+			.bayData:hover{
+				background-color:#f1f1f1;
+				cursor:pointer;
+			}
+			.YearData{
+				width:100%;
+				height:250px;
+				overflow: overlay
+			}
+			.DataButton{
+				width:100%;
+				height:40px;
+				display:flex;
+				justify-content:flex-end;
+				align-items:center;
+				padding-right:10px;
+			}
+			:global{
+				.ant-fullcalendar-header{
+					display:none
+				}
+				.ant-calendar-picker{
+					margin-top:3px;
+				}
+			}
+		}
+	}
+}

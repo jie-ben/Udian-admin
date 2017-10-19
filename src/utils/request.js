@@ -15,6 +15,8 @@ function checkStatus(response) {
 
       message.error(response.errorMessage);
       
+    }else{
+      message.error(response.errorMessage);
     }
 
     // const error = new Error(response.statusText);

@@ -44,6 +44,12 @@ module.exports = [
     icon: 'file-pdf',
     router: '/rules',
   },{
+    id: 12,
+    bpid: 1,
+    name: '经销商审核',
+    icon: 'share-alt',
+    router: '/distributor',
+  },{
     id: 9,
     bpid: 1,
     name: '权限管理',
