@@ -21,7 +21,7 @@ export async function allCustomer (params) {
     })
 }
 export async function everydayIncome (params) {
-    const url = '/order/everydayIncome?jsessionid=' + localStorage.getItem("token") +"&startDate="+params.startDate+"&endDate="+params.endDate
+    const url = '/order/everydayIncome?jsessionid=' + localStorage.getItem("token") +"&startDate="+params.startDate+"&endDate="+params.endDate +"&type=" +params.type
     return request(url, {
       method: 'get',
       data: params

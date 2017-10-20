@@ -81,7 +81,6 @@ const CustomizedAxisTick = React.createClass({
   };
 function Dashboard ({  location, dispatch, dashboard, loading  }) {
   const { allOrderNumber, allCountNumber,allCustomerNumber,BayEarningsArry} = dashboard
-  console.log("BayEarningsArry==",BayEarningsArry)
   const allCountNumberData = [{name: '已激活', value:allCountNumber.activatedCount}, 
                               {name: '未激活', value: allCountNumber.unactivationCount},
                               {name: '可用', value: allCountNumber.availableCount},
@@ -93,12 +92,36 @@ function Dashboard ({  location, dispatch, dashboard, loading  }) {
                                 {name: '欠费用户', value: allCustomerNumber.arrearsCount},
                                 {name: '正在使用充电宝', value: allCustomerNumber.usingCount},
                               ]
+  let BayEarningsArryData =[]
+  for(let x in BayEarningsArry){
+    if(BayEarningsArry[x].length){
+      for(let i=0;i<BayEarningsArry[x].length;i++){
+        let num = BayEarningsArry[x].length - (i+1) 
+        let DateN = new Date(BayEarningsArry[x][num].createdDate)
+        const DateY = DateN.getFullYear();   
+        const DateM = DateN.getMonth();     
+        const DateD = DateN.getDate();
+        BayEarningsArryData.push({name:DateY+"-"+DateM+"-"+DateD,uv:parseInt(BayEarningsArry[x][num].result)})
+      }
+    }else{
+      BayEarningsArryData.push({name:x,uv:parseInt(BayEarningsArry[x])})
+    }
+  }
+  let BayEarningsArryDom = []
+  if(BayEarningsArry == {}){
+    console.log("有",BayEarningsArry)
+  }else{
+    console.log("无",BayEarningsArry)
+  }
   function callback(key) {
     console.log(key);
   }
   const moneyProps = {
-    onOk(e){
-      console.log("onOk-money",e)
+    onOk(data){
+      dispatch({
+          type: 'dashboard/earningDay',
+          payload:data
+        })
     }
   }
   return (
@@ -126,20 +149,22 @@ function Dashboard ({  location, dispatch, dashboard, loading  }) {
           padding: '24px 36px 24px 0',height:600,
         }}>
             <Tabs defaultActiveKey="1" onChange={callback}>
-              <TabPane tab="充电宝统计" key="1">
+              <TabPane tab="资金统计" key="1">
+              <div style={{width:'100%',height:'400px'}}>
                 <div className={styles.ScreenBx}><Screen {...moneyProps}/></div>
-                <LineChart className={styles.LineChartCount} width={1200} height={400} data={data}
+                <LineChart className={styles.LineChartCount} width={1200} height={400} data={BayEarningsArryData}
                         margin={{top: 20, right: 30, left: 20, bottom: 10}}>
                    <XAxis dataKey="name" height={100} tick={<CustomizedAxisTick/>}/>
                    <YAxis/>
                    <CartesianGrid strokeDasharray="3 3"/>
                    <Tooltip/>
                    <Legend verticalAlign="bottom" height={36}/>
-                   <Line type="monotone" name="充电宝(个)" dataKey="uv" />
+                   <Line type="monotone" name="盈利统计(元)" dataKey="uv" />
                 </LineChart>
+                </div>
               </TabPane>
               <TabPane tab="订单统计" key="2">Content of Tab Pane 2</TabPane>
-              <TabPane tab="资金统计" key="3">Content of Tab Pane 3</TabPane>
+              <TabPane tab="充电宝统计" key="3">Content of Tab Pane 3</TabPane>
             </Tabs>
         </Card>
       </Col>

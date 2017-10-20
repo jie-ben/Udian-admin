@@ -22,7 +22,8 @@ class download extends React.Component {
       Screen:false,
       YearEle:-1,
       BayEle:7,
-      monthEle:-1
+      monthEle:-1,
+      monthEleYear:-1,
    }
    componentDidMount(){
         document.onclick=this.onAllHide;
@@ -33,7 +34,6 @@ class download extends React.Component {
     onAllHide =(e)=>{
         this.setState({
           Screen:false,
-          SeleData:"bay"
         })
     }
   render() {
@@ -61,6 +61,7 @@ class download extends React.Component {
         BayEle:e.target.getAttribute("value"),
         monthEle:-1,
         YearEle:-1,
+        monthEleYear:-1
       })
     }
     const onYearData=(e)=>{
@@ -68,12 +69,14 @@ class download extends React.Component {
         YearEle:e.target.getAttribute("value"),
         BayEle:-1,
         monthEle:-1,
+        monthEleYear:-1,
       })
     }
     const onMonthPicker=(e)=>{
       this.setState({
         BayEle:-1,
-        YearEle:e.year,
+        monthEleYear:e.year,
+        YearEle:-1,
         monthEle:e.month
       })
     }
@@ -92,36 +95,40 @@ class download extends React.Component {
       }else{
         ret = Y + "-" + (M+1) + "-2"+" " +"23:59:59" 
       }
-      console.log(ret)
       return ret 
     }
     //点击确认回调
     const confirm =()=>{
       let SeleData = this.state.SeleData
-      let startDate = '',endDate=''
+      let startDate = '',endDate='' ,type = ""
       if(SeleData =="bay"){
         let NextNow  = addDate((NowMonth+1)+"/"+NowBay+"/"+NowYear,-(this.state.BayEle));
         let Y = NextNow.getFullYear();
         let M = NextNow.getMonth()+1;
         let D = NextNow.getDate();
-        startDate = NowYear+"-"+ (NowMonth+1)+"-"+ NowBay +" "+"0:0:0";
-        endDate = Y+"-"+M+"-"+D+" "+ "23:59:59"
+         endDate = NowYear+"-"+ (NowMonth+1)+"-"+ NowBay +" "+"0:0:0";
+         startDate = Y+"-"+M+"-"+D+" "+ "23:59:59"
       }else if(SeleData =="month"){
-        startDate = this.state.YearEle + "-"+this.state.monthEle + "-1"+" "+"0:0:0"
-        endDate = monthComp(this.state.YearEle,this.state.monthEle)
+        startDate = this.state.monthEleYear + "-"+this.state.monthEle + "-1"+" "+"0:0:0"
+        endDate  = monthComp(this.state.monthEleYear,this.state.monthEle)
       }else{
         startDate = this.state.YearEle + "-1-1"+" "+"0:0:0"
-        endDate = (parseInt(this.state.YearEle) + 1) +" "+ "-1-2"+" "+"23:59:59"
+        endDate  = (parseInt(this.state.YearEle) + 1) +"-1-2"+" "+"23:59:59"
+        type="year"
       }
       const data = {
         startDate:startDate,
-        endDate:endDate
+        endDate:endDate,
+        type:type
       }
+      this.setState({
+        Screen:false,
+      })
       onOk(data)
     }
     const mnthProps={
       monthEle:this.state.monthEle,
-      yearEle:this.state.YearEle,
+      yearEle:this.state.monthEleYear,
     }
     const ScreenInput = {
        display:this.state.Screen ? '':'none'
@@ -140,6 +147,7 @@ class download extends React.Component {
     for(let i=0;i<10;i++){
       YearArryData.push(<Row className={ this.state.YearEle == NowYear-i ? styles.bayDataEle : styles.bayData} value={(NowYear-i)} onClick={onYearData}>{(NowYear-i)}年</Row>)
     }
+
     return (
       <div className={styles.Calendarbx} onClick={this.onStopImmediatePropagation}>
         <div className={styles.CalendarbxInput}>

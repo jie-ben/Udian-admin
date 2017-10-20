@@ -7,7 +7,7 @@ export default {
     allOrderNumber:'',
     allCountNumber:'',
     allCustomerNumber:'',
-    BayEarningsArry:[],
+    BayEarningsArry:{},
   },
   subscriptions: {
     setup ({ dispatch }) {
@@ -53,21 +53,22 @@ export default {
           date = {
             startDate:payload.startDate,
             endDate:payload.endDate,
+            type:payload.type
           }
         }else{
           let NextNow  = addDate((NowMonth+1)+"/"+NowBay+"/"+NowYear,-7);
           let Y = NextNow.getFullYear();
           let M = NextNow.getMonth()+1;
           let D = NextNow.getDate();
-          let startDate = NowYear+"-"+ (NowMonth+1)+"-"+ NowBay +" "+"0:0:0";
-          let endDate = Y+"-"+M+"-"+D+" "+ "23:59:59"
+          let  endDate = NowYear+"-"+ (NowMonth+1)+"-"+ NowBay +" "+"00:00:00";
+          let  startDate = Y+"-"+M+"-"+D+" "+ "23:59:59"
           date ={
             startDate:startDate,
-            endDate:endDate
+            endDate:endDate,
+            type:""
           }
         }
       const data = yield call(everydayIncome,date)
-      console.log("data==",data)
       if(data){
         yield put({
           type: 'BayEarnings', 
